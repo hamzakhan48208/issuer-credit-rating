@@ -1,0 +1,150 @@
+.container{
+  padding: 20px 40px;
+}
+.container .head h2{
+  font-size: 2rem;
+  font-weight: 500;
+}
+.container .actions{
+  width: 98%;
+
+  background-color: #232323;
+  padding: 18px 16px;
+
+  border-radius: 12px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.container .actions .buttons{
+  display: flex;
+}
+.container .actions .buttons p{
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-left: 12px;
+}
+.container .actions .buttons button{
+  /* padding: 12px 40px; */
+  width: 102px;
+  height: 36px;
+
+  font-size: 13px;
+  background-color: orange;
+  outline: none;
+  border: none;
+
+  border-radius: 5px;
+  margin-right: 22px;
+}
+.container .actions .pagination{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container .actions .pagination .pages select{
+  padding: 10px 16px;
+  background-color: #2F2F2F;
+
+  color: #fff;
+  border: none;
+  outline: none;
+
+  border-radius: 6px;
+  margin-right: 20px;
+}
+.container .actions .pagination .pages label{
+  margin-right: 12px;
+}
+.container .actions .pagination .controls{
+  display: flex;
+}
+.container .actions .pagination .controls p{
+  margin-right: 12px;
+}
+.container .actions .pagination .controls .prev{
+  cursor: pointer;
+}
+.container .actions .pagination .controls .next{
+  cursor: pointer;
+}
+
+
+.container .table-div{
+  margin-top: 30px;
+  width: 100%;
+
+
+  overflow-y: auto;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  width: 100%;
+  max-height: 72vh;
+
+  border-radius: 14px;
+}
+
+th{
+  padding: 24px 5px;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #232323;
+}
+table, td {
+  border-collapse: collapse;
+
+  padding: 12px 24px;
+}
+td{
+  text-align: center;
+}
+tr{
+    border-top: 1px solid rgb(68, 68, 68);
+}
+
+.container table{
+  background-color: #232323;
+
+  font-size: 15px;
+}
+.container .table-div thead th{
+  font-weight: 500;
+}
+.container .table-div .edit{
+  width: 100px;
+  height: 36px;
+
+  font-size: 13px;
+  background-color: orange;
+  outline: none;
+  border: none;
+
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.container .table-div input{
+  width: 8rem;
+  padding: 5px 2px;
+
+  background-color: #2F2F2F;
+  color: #fff;
+
+  outline: none;
+  border: 1px solid #fff;
+}
+.container .table-div select{
+  padding: 5px 2px;
+
+  background-color: #2F2F2F;
+  color: #fff;
+  border: 1px solid #fff;
+}

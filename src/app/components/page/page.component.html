@@ -1,0 +1,156 @@
+<div class="container">
+  <!-- heading -->
+  <div class="head">
+    <h2>Setup - Issuer Credit Rating</h2>
+  </div>
+
+  <!-- actions -->
+  <div class="actions">
+    <div class="buttons">
+      <button class="add" (click)="addRecord()" [disabled]="isEdit">Add</button>
+      <button class="save" [disabled]="!isEdit">Save</button>
+      <p>Total Records: {{records.length}}</p>
+    </div>
+
+    <div class="pagination">
+      <div class="pages">
+
+        <label for="cars">Items per page</label>
+        <select id="cars" [(ngModel)]="size" (change)="onRecordsLengthChanged()">
+          <option value={{no}} *ngFor="let no of recordsArr">{{no}}</option>
+        </select>
+
+      </div>
+
+      <div class="controls">
+        <p>{{first === 0 ? 1 : first}} - {{last}} of {{totalRecords}}</p>
+        <p class="prev" (click)="prev()"><</p>
+        <p class="next" (click)="next()">></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- table -->
+
+  <div class="table-div">
+    <table>
+      <thead>
+        <th></th>
+        <th>Issuer/Price Provide</th>
+        <th>Issuer Name</th>
+        <th>Moody's Rating</th>
+        <th>S&P Rating</th>
+        <th>Fitch Rating</th>
+        <th>Guarantor</th>
+        <th>Calc Agent</th>
+        <th>Created At</th>
+        <th>Created By</th>
+        <th>Updated At</th>
+        <th>Updated By</th>
+      </thead>
+
+      <tr>
+        <!-- Add Data -->
+        <td style="width: 8%" *ngIf="addPressed"><button class="edit" (click)="cancelAdd()">Cancel</button></td>
+        <td *ngIf="addPressed" style="width: 8%">
+          <select class="issuePricerSelectAdd">
+            <option value={{value}} *ngFor="let value of issuerProviderOptions">{{value}}</option>
+          </select>
+         </td>
+
+         <td *ngIf="addPressed" style="width: 10%">
+          <input class="issuerNameInputAdd" type="text">
+         </td>
+
+         <td *ngIf="addPressed" style="width: 7%">
+          <select class="moodysSelectAdd">
+            <option *ngFor="let value of moddysRatingOptions" value={{value}}>{{value}}</option>
+          </select>
+         </td>
+
+         <td *ngIf="addPressed" style="width: 7%">
+          <select class="spSelectAdd">
+            <option *ngFor="let value of spRatingOptions" value={{value}}>A</option>
+          </select>
+         </td>
+
+         <td *ngIf="addPressed" style="width: 7%">
+          <select class="fitchSelectAdd">
+            <option *ngFor="let value of fitchRatingOptions" value={{value}}>A</option>
+          </select>
+        </td>
+
+         <td style="width: 10%" class="guarantorAdd" *ngIf="addPressed">
+          <input type="text" value={{record.Guarantor}}>
+        </td>
+         <td style="width: 10%" class="calcAgentAdd" *ngIf="addPressed">
+          <input type="text" value={{record.CalcAgent}}>
+        </td>
+         <td style="width: 8%" class="createdAtAdd" *ngIf="addPressed"></td>
+         <td style="width: 8%" class="createdByAdd" *ngIf="addPressed"></td>
+         <td style="width: 8%" class="updatedAtAdd" *ngIf="addPressed"></td>
+         <td style="width: 8%" class="updatedByAdd" *ngIf="addPressed"></td>
+      </tr>
+
+
+
+      <tr *ngFor="let record of recordsFiltered; let i = index">
+        <td style="width: 8%"><button class="edit" (click)="toggleEdit(i)">{{editNumber!=i ? 'Edit' : 'Cancel'}}</button></td>
+        <td style="width: 8%" class="issuerPriceProvider" *ngIf="editNumber!=i">{{record.IssuerPriceProvider}}</td>
+        <td style="width: 10%" class="issuerName" *ngIf="editNumber!=i">{{record.IssuerName}}</td>
+        <td style="width: 7%" class="moodysRating"*ngIf="editNumber!=i" >{{record.MoodysRating}}</td>
+        <td style="width: 7%" class="spRating" *ngIf="editNumber!=i">{{record.SPRating}}</td>
+        <td style="width: 7%" class="fitchRating" *ngIf="editNumber!=i">{{record.FitchRating}}</td>
+        <td style="width: 10%" class="guarantor" *ngIf="editNumber!=i">{{record.Guarantor}}</td>
+        <td style="width: 10%" class="calcAgent" *ngIf="editNumber!=i">{{record.CalcAgent}}</td>
+        <td style="width: 8%" class="createdAt" *ngIf="editNumber!=i">{{record.CreatedAt}}</td>
+        <td style="width: 8%" class="createdBy" *ngIf="editNumber!=i">{{record.CreatedBy}}</td>
+        <td style="width: 8%" class="updatedAt" *ngIf="editNumber!=i">{{record.UpdatedAt}}</td>
+        <td style="width: 8%" class="updatedBy" *ngIf="editNumber!=i">{{record.UpdatedBy}}</td>
+
+        <!-- After Edit -->
+        <td *ngIf="editNumber===i" style="width: 8%">
+          <select class="issuePricerSelect">
+            <option value="BARCLAYS">BARCLAYS</option>
+          </select>
+         </td>
+
+         <td *ngIf="editNumber===i" style="width: 10%">
+          <input class="issuerNameInput" type="text" value={{record.IssuerName}}>
+         </td>
+
+         <td *ngIf="editNumber===i" style="width: 7%">
+          <select class="moodysSelect">
+            <option value="A">A</option>
+          </select>
+         </td>
+
+         <td *ngIf="editNumber===i" style="width: 7%">
+          <select class="spSelect">
+            <option value="A">A</option>
+          </select>
+         </td>
+
+         <td *ngIf="editNumber===i" style="width: 7%">
+          <select class="fitchSelect">
+            <option value="A">A</option>
+          </select>
+        </td>
+
+         <td style="width: 10%" class="guarantor" *ngIf="editNumber===i">
+          <input type="text" value={{record.Guarantor}}>
+        </td>
+         <td style="width: 10%" class="calcAgent" *ngIf="editNumber===i">
+          <input type="text" value={{record.CalcAgent}}>
+        </td>
+         <td style="width: 8%" class="createdAt" *ngIf="editNumber===i">{{record.CreatedAt}}</td>
+         <td style="width: 8%" class="createdBy" *ngIf="editNumber===i">{{record.CreatedBy}}</td>
+         <td style="width: 8%" class="updatedAt" *ngIf="editNumber===i">{{record.UpdatedAt}}</td>
+         <td style="width: 8%" class="updatedBy" *ngIf="editNumber===i">{{record.UpdatedBy}}</td>
+
+      </tr>
+    </table>
+  </div>
+
+
+</div>
