@@ -8,7 +8,7 @@
   <div class="actions">
     <div class="buttons">
       <button class="add" (click)="addRecord()" [disabled]="isEdit">Add</button>
-      <button class="save" [disabled]="!isEdit">Save</button>
+      <button class="save" [disabled]="!isEdit" (click)="saveRecord()">Save<span class="loader" *ngIf="isSaving"></span></button>
       <p>Total Records: {{records.length}}</p>
     </div>
 
@@ -36,55 +36,203 @@
     <table>
       <thead>
         <th></th>
-        <th>Issuer/Price Provide</th>
-        <th>Issuer Name</th>
-        <th>Moody's Rating</th>
-        <th>S&P Rating</th>
-        <th>Fitch Rating</th>
-        <th>Guarantor</th>
-        <th>Calc Agent</th>
-        <th>Created At</th>
-        <th>Created By</th>
-        <th>Updated At</th>
-        <th>Updated By</th>
+        <!-- <th>Issuer/Price Provide</th> -->
+        <th (click)="showFilter('issuerPriceFilter')">
+          <div class="head-content">
+            <p>Issuer/Price Provider</p>
+            <div class="filter-box" *ngIf="filterState === 'issuerPriceFilter'">
+              <p (click)="sortByAscending()">Sort by Ascending</p>
+              <p (click)="sortByDescending()">Sort by Descending</p>
+              <form class="search" (submit)="searchDataUsingFilter()">
+                <input type="text" [(ngModel)]="filterSearch" name="search">
+              </form>
+              <p class="clearFilter" (click)="clearFilter()">Clear Filter</p>
+              <p class="closeFilter" (click)="closeFilter()">Close</p>
+            </div>
+          </div>
+        </th>
+        <th (click)="showFilter('issuerNameFilter')">
+          <div class="head-content">
+            <p>Issuer Name</p>
+            <div class="filter-box" *ngIf="filterState === 'issuerNameFilter'">
+              <p (click)="sortByAscending()">Sort by Ascending</p>
+              <p (click)="sortByAscending()">Sort by Descending</p>
+              <form class="search" (submit)="searchDataUsingFilter()">
+                <input type="text" [(ngModel)]="filterSearch" name="search">
+              </form>
+              <p class="clearFilter" (click)="clearFilter()">Clear Filter</p>
+              <p class="closeFilter" (click)="closeFilter()">Close</p>
+            </div>
+          </div>
+        </th>
+        <th (click)="showFilter('moodysRatingFilter')">
+          <div class="head-content">
+            <p>Moody's Rating</p>
+            <div class="filter-box" *ngIf="filterState === 'moodysRatingFilter'">
+              <p (click)="sortByAscending()">Sort by Ascending</p>
+              <p (click)="sortByDescending()">Sort by Descending</p>
+              <form class="search" (submit)="searchDataUsingFilter()">
+                <input type="text" [(ngModel)]="filterSearch" name="search">
+              </form>
+              <p class="clearFilter" (click)="clearFilter()">Clear Filter</p>
+              <p class="closeFilter" (click)="closeFilter()">Close</p>
+            </div>
+          </div>
+        </th>
+        <th (click)="showFilter('sAndPRatingFilter')">
+          <div class="head-content">
+            <p>S&P Rating</p>
+            <div class="filter-box" *ngIf="filterState === 'sAndPRatingFilter'">
+              <p (click)="sortByAscending()">Sort by Ascending</p>
+              <p (click)="sortByDescending()">Sort by Descending</p>
+              <form class="search" (submit)="searchDataUsingFilter()">
+                <input type="text" [(ngModel)]="filterSearch" name="search">
+              </form>
+              <p class="clearFilter" (click)="clearFilter()">Clear Filter</p>
+              <p class="closeFilter" (click)="closeFilter()">Close</p>
+            </div>
+          </div>
+        </th>
+        <th (click)="showFilter('fitchRatingFilter')">
+          <div class="head-content">
+            <p>Fitch Rating</p>
+            <div class="filter-box" *ngIf="filterState === 'fitchRatingFilter'">
+              <p (click)="sortByAscending()">Sort by Ascending</p>
+              <p (click)="sortByDescending()">Sort by Descending</p>
+              <form class="search" (submit)="searchDataUsingFilter()">
+                <input type="text" [(ngModel)]="filterSearch" name="search">
+              </form>
+              <p class="clearFilter" (click)="clearFilter()">Clear Filter</p>
+              <p class="closeFilter" (click)="closeFilter()">Close</p>
+            </div>
+          </div>
+        </th>
+        <th (click)="showFilter('guarantorFilter')">
+          <div class="head-content">
+            <p>Guarantor</p>
+            <div class="filter-box" *ngIf="filterState === 'guarantorFilter'">
+              <p (click)="sortByAscending()">Sort by Ascending</p>
+              <p (click)="sortByDescending()">Sort by Descending</p>
+              <form class="search" (submit)="searchDataUsingFilter()">
+                <input type="text" [(ngModel)]="filterSearch" name="search">
+              </form>
+              <p class="clearFilter" (click)="clearFilter()">Clear Filter</p>
+              <p class="closeFilter" (click)="closeFilter()">Close</p>
+            </div>
+          </div>
+        </th>
+        <th (click)="showFilter('calcAgentFilter')">
+          <div class="head-content">
+            <p>Calc Agent</p>
+            <div class="filter-box" *ngIf="filterState === 'calcAgentFilter'">
+              <p (click)="sortByAscending()">Sort by Ascending</p>
+              <p (click)="sortByDescending()">Sort by Descending</p>
+              <form class="search" (submit)="searchDataUsingFilter()">
+                <input type="text" [(ngModel)]="filterSearch" name="search">
+              </form>
+              <p class="clearFilter" (click)="clearFilter()">Clear Filter</p>
+              <p class="closeFilter" (click)="closeFilter()">Close</p>
+            </div>
+          </div>
+        </th>
+        <th (click)="showFilter('createdAtFilter')">
+          <div class="head-content">
+            <p>Created At</p>
+            <div class="filter-box" *ngIf="filterState === 'createdAtFilter'">
+              <p (click)="sortByAscending()">Sort by Ascending</p>
+              <p (click)="sortByDescending()">Sort by Descending</p>
+              <form class="search" (submit)="searchDataUsingFilter()">
+                <input type="text" [(ngModel)]="filterSearch" name="search">
+              </form>
+              <p class="clearFilter" (click)="clearFilter()">Clear Filter</p>
+              <p class="closeFilter" (click)="closeFilter()">Close</p>
+            </div>
+          </div>
+        </th>
+        <th (click)="showFilter('createdByFilter')">
+          <div class="head-content">
+            <p>Created By</p>
+            <div class="filter-box" *ngIf="filterState === 'createdByFilter'">
+              <p (click)="sortByAscending()">Sort by Ascending</p>
+              <p (click)="sortByDescending()">Sort by Descending</p>
+              <form class="search" (submit)="searchDataUsingFilter()">
+                <input type="text" [(ngModel)]="filterSearch" name="search">
+              </form>
+              <p class="clearFilter" (click)="clearFilter()">Clear Filter</p>
+              <p class="closeFilter" (click)="closeFilter()">Close</p>
+            </div>
+          </div>
+        </th>
+        <th (click)="showFilter('updatedAtFilter')">
+          <div class="head-content">
+            <p>Updated At</p>
+            <div class="filter-box" *ngIf="filterState === 'updatedAtFilter'">
+              <p (click)="sortByAscending()">Sort by Ascending</p>
+              <p (click)="sortByDescending()">Sort by Descending</p>
+              <form class="search" (submit)="searchDataUsingFilter()">
+                <input type="text" [(ngModel)]="filterSearch" name="search">
+              </form>
+              <p class="clearFilter" (click)="clearFilter()">Clear Filter</p>
+              <p class="closeFilter" (click)="closeFilter()">Close</p>
+            </div>
+          </div>
+        </th>
+        <th (click)="showFilter('updatedByFilter')">
+          <div class="head-content">
+            <p>Updated By</p>
+            <div class="filter-box" *ngIf="filterState === 'updatedByFilter'">
+              <p (click)="sortByAscending()">Sort by Ascending</p>
+              <p (click)="sortByDescending()">Sort by Descending</p>
+              <form class="search" (submit)="searchDataUsingFilter()">
+                <input type="text" [(ngModel)]="filterSearch" name="search">
+              </form>
+              <p class="clearFilter" (click)="clearFilter()">Clear Filter</p>
+              <p class="closeFilter" (click)="closeFilter()">Close</p>
+            </div>
+          </div>
+        </th>
       </thead>
+
+      <tr *ngIf="filterState!=='none'" style="height: 10rem; border-top: 0px"></tr>
+
+
 
       <tr>
         <!-- Add Data -->
         <td style="width: 8%" *ngIf="addPressed"><button class="edit" (click)="cancelAdd()">Cancel</button></td>
         <td *ngIf="addPressed" style="width: 8%">
-          <select class="issuePricerSelectAdd">
+          <select class="issuePricerSelectAdd" [(ngModel)]="selectedIssuerProvider">
             <option value={{value}} *ngFor="let value of issuerProviderOptions">{{value}}</option>
           </select>
          </td>
 
          <td *ngIf="addPressed" style="width: 10%">
-          <input class="issuerNameInputAdd" type="text">
+          <input class="issuerNameInputAdd" type="text" [(ngModel)]="newIssuerName">
          </td>
 
          <td *ngIf="addPressed" style="width: 7%">
-          <select class="moodysSelectAdd">
-            <option *ngFor="let value of moddysRatingOptions" value={{value}}>{{value}}</option>
+          <select class="moodysSelectAdd" [(ngModel)]="selectedMoodysRating">
+            <option *ngFor="let value of moddysRatingOptions">{{value}}</option>
           </select>
          </td>
 
          <td *ngIf="addPressed" style="width: 7%">
-          <select class="spSelectAdd">
-            <option *ngFor="let value of spRatingOptions" value={{value}}>A</option>
+          <select class="spSelectAdd" [(ngModel)]="selectedSpRating">
+            <option *ngFor="let value of spRatingOptions">{{value}}</option>
           </select>
          </td>
 
          <td *ngIf="addPressed" style="width: 7%">
-          <select class="fitchSelectAdd">
-            <option *ngFor="let value of fitchRatingOptions" value={{value}}>A</option>
+          <select class="fitchSelectAdd" [(ngModel)]="selectedFitchRating">
+            <option *ngFor="let value of fitchRatingOptions">{{value}}</option>
           </select>
         </td>
 
          <td style="width: 10%" class="guarantorAdd" *ngIf="addPressed">
-          <input type="text" value={{record.Guarantor}}>
+          <input type="text" [(ngModel)]="newGuarantor">
         </td>
          <td style="width: 10%" class="calcAgentAdd" *ngIf="addPressed">
-          <input type="text" value={{record.CalcAgent}}>
+          <input type="text" [(ngModel)]="newCalcAgent">
         </td>
          <td style="width: 8%" class="createdAtAdd" *ngIf="addPressed"></td>
          <td style="width: 8%" class="createdByAdd" *ngIf="addPressed"></td>
@@ -95,7 +243,7 @@
 
 
       <tr *ngFor="let record of recordsFiltered; let i = index">
-        <td style="width: 8%"><button class="edit" (click)="toggleEdit(i)">{{editNumber!=i ? 'Edit' : 'Cancel'}}</button></td>
+        <td style="width: 8%"><button class="edit" (click)="toggleEdit(i, record)">{{editNumber!=i ? 'Edit' : 'Cancel'}}</button></td>
         <td style="width: 8%" class="issuerPriceProvider" *ngIf="editNumber!=i">{{record.IssuerPriceProvider}}</td>
         <td style="width: 10%" class="issuerName" *ngIf="editNumber!=i">{{record.IssuerName}}</td>
         <td style="width: 7%" class="moodysRating"*ngIf="editNumber!=i" >{{record.MoodysRating}}</td>
@@ -111,37 +259,37 @@
         <!-- After Edit -->
         <td *ngIf="editNumber===i" style="width: 8%">
           <select class="issuePricerSelect" disabled>
-            <option value="BARCLAYS">BARCLAYS</option>
+            <option value={{record.IssuerPriceProvider}}>{{record.IssuerPriceProvider}}</option>
           </select>
          </td>
 
          <td *ngIf="editNumber===i" style="width: 10%">
-          <input class="issuerNameInput" type="text" value={{record.IssuerName}}>
+          <input class="issuerNameInput" type="text" [(ngModel)]="newIssuerName">
          </td>
 
          <td *ngIf="editNumber===i" style="width: 7%">
-          <select class="moodysSelect">
-            <option value="A">A</option>
+          <select class="moodysSelect" [(ngModel)]="selectedMoodysRating">
+            <option *ngFor="let option of moddysRatingOptions">{{option}}</option>
           </select>
          </td>
 
          <td *ngIf="editNumber===i" style="width: 7%">
-          <select class="spSelect">
-            <option value="A">A</option>
+          <select class="spSelect" [(ngModel)]="selectedSpRating">
+            <option *ngFor="let option of spRatingOptions">{{option}}</option>
           </select>
          </td>
 
          <td *ngIf="editNumber===i" style="width: 7%">
-          <select class="fitchSelect">
-            <option value="A">A</option>
+          <select class="fitchSelect" [(ngModel)]="selectedFitchRating">
+            <option *ngFor="let option of fitchRatingOptions">{{option}}</option>
           </select>
         </td>
 
          <td style="width: 10%" class="guarantor" *ngIf="editNumber===i">
-          <input type="text" value={{record.Guarantor}}>
+          <input type="text" [(ngModel)]="newGuarantor">
         </td>
          <td style="width: 10%" class="calcAgent" *ngIf="editNumber===i">
-          <input type="text" value={{record.CalcAgent}}>
+          <input type="text" [(ngModel)]="newCalcAgent">
         </td>
          <td style="width: 8%" class="createdAt" *ngIf="editNumber===i">{{record.CreatedAt}}</td>
          <td style="width: 8%" class="createdBy" *ngIf="editNumber===i">{{record.CreatedBy}}</td>

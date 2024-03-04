@@ -42,6 +42,8 @@
 
   border-radius: 5px;
   margin-right: 22px;
+
+  cursor: pointer;
 }
 .container .actions .pagination{
   display: flex;
@@ -78,7 +80,7 @@
 
 .container .table-div{
   margin-top: 30px;
-  width: 100%;
+  max-width: 100%;
 
 
   overflow-y: auto;
@@ -97,6 +99,8 @@ th{
   top: 0;
   z-index: 1000;
   background: #232323;
+
+  cursor: pointer;
 }
 table, td {
   border-collapse: collapse;
@@ -117,6 +121,10 @@ tr{
 }
 .container .table-div thead th{
   font-weight: 500;
+}
+.container .table-div thead th p{
+  margin: 0;
+  padding: 0;
 }
 .container .table-div .edit{
   width: 100px;
@@ -147,4 +155,58 @@ tr{
   background-color: #2F2F2F;
   color: #fff;
   border: 1px solid #fff;
+}
+
+
+/* Filter */
+.container .table-div .head-content .filter-box{
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  width: 9rem;
+  min-height: 8rem !important;
+  padding: 10px;
+
+  text-align: left;
+  background: #2F2F2F;
+
+  border-radius: 10px;
+
+  z-index: 1000000;
+}
+.container .table-div .head-content .filter-box p{
+  font-size: 14px;
+}
+.container .table-div .head-content .filter-box p:nth-child(2){
+  margin: 10px 0;
+}
+.container .table-div .head-content .filter-box .clearFilter{
+  margin-top: 8px;
+  color: rgb(108, 108, 255);
+}
+.container .table-div .head-content .filter-box .closeFilter{
+  margin-top: 6px;
+  color: rgb(108, 108, 255);
+}
+
+/* Loader */
+.container .actions .buttons .loader{
+  margin-left: 6px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #000;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  }
+
+  @keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
 }
